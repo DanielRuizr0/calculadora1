@@ -1,0 +1,32 @@
+name: Android Testing
+
+on:
+  push:
+    branches:
+      - main  # Puedes cambiar esto según tu rama principal
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Setup JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+
+    - name: Build con Gradle
+      run: ./gradlew assembleDebug
+
+    - name: Ejecutar pruebas
+      run: ./gradlew testDebug
+
+    - name: Publicar resultados de pruebas
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: app/build/reports
