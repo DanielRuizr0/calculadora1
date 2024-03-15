@@ -1,13 +1,9 @@
-name: Android Testing
+name: testing
 
 on:
   push:
-    branches: ["master"]
-
-  pull_request:
-    branches: ["master"]
-
-
+    branches:
+      - master
 
 jobs:
   build:
@@ -15,15 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout codigo
+      - name: Checkout código
         uses: actions/checkout@v2
 
       - name: Setup JDK
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          distribution: termurin
-          cache: gradle
+
+      - name: Otorgar permisos a gradlew
+        run: chmod +x ./gradlew
 
       - name: Build con Gradle
         run: ./gradlew assembleDebug
